@@ -13,3 +13,10 @@ tfidf_matrix_dense = pd.DataFrame(vectorizer.fit_transform(df["genres"]).todense
 
 cosine_sim = cosine_similarity(tfidf_matrix)
 cosine_sim_dense = pd.DataFrame(cosine_sim, index=df['title'], columns=df['title'])
+
+input_movie = 'Jumanji (1995)'
+top_k = 10
+top_semilar = cosine_sim_dense.loc[input_movie].drop(input_movie).sort_values(ascending=False)[:top_k].to_frame(
+    name='score').reset_index()
+
+print(top_semilar['title'])
